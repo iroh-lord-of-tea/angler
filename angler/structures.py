@@ -181,7 +181,7 @@ def N_IO_port(N, L, H, w, d, l, spc, dl, NPML, eps_start, eps_background=1):
     reg_list = [box]
     for i in range(N):
         y_i = (float(i)-float(N-1)/2.0)*d
-        wg_in = lambda x, y, y_i=y_i: (x < 0)         * (np.abs(y-y_i) < dl*wg_width_px/2)  # note, this slight offset is to fix gridding issues
+        wg_in = lambda x, y, y_i=y_i: (x < 0)         * (np.abs(y-y_i) < dl*wg_width_px/2)
         reg_list.append(wg_in)
         wg_i = lambda x, y, y_i=y_i: (x > 0)           * (np.abs(y-y_i) < dl*wg_width_px/2)
         reg_list.append(wg_i)
