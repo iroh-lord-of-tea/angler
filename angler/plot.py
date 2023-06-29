@@ -24,8 +24,8 @@ def plt_base(field_val, outline_val, cmap, vmin, vmax, label,
 
     if outline:
         # Do black and white so we can see on both magma and RdBu
-        ax.contour(outline_val, levels=2, linewidths=1.0, colors='w')
-        ax.contour(outline_val, levels=2, linewidths=0.5, colors='k')
+        ax.contour(outline_val, levels=2, linewidths=0.5, colors='w')
+        ax.contour(outline_val, levels=2, linewidths=0.2, colors='k')
 
     ax.set_xticks([])
     ax.set_yticks([])
