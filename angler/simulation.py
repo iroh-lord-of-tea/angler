@@ -56,8 +56,11 @@ class Simulation:
 
     def setup_modes(self):
         # calculates
+        mode_src = []
         for modei in self.modes:
-            modei.setup_src(self)
+            src = modei.setup_src(self)
+            mode_src.append(src)
+        return mode_src
 
     def add_mode(self, neff, direction_normal, center, width,
                  scale=1, order=1):

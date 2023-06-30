@@ -21,7 +21,9 @@ class mode:
         self.compute_normalization(simulation, matrix_format=matrix_format)
 
         # insert the mode into the waveguide
-        self.insert_mode(simulation, simulation.src, matrix_format=matrix_format)
+        src = self.insert_mode(simulation, simulation.src, matrix_format=matrix_format)
+
+        return src 
 
     def compute_normalization(self, simulation, matrix_format=DEFAULT_MATRIX_FORMAT):
         # creates a single waveguide simulation, solves the source, computes the power
@@ -50,7 +52,7 @@ class mode:
 
         # reset the permittivity to be a straight waveguide, solve fields, compute power
         simulation_norm.eps_r = norm_eps
-        self.insert_mode(simulation_norm, simulation_norm.src, matrix_format=matrix_format)
+        _ = self.insert_mode(simulation_norm, simulation_norm.src, matrix_format=matrix_format)
         simulation_norm.solve_fields()
         W_in = simulation_norm.flux_probe(self.direction_normal, new_center, self.width)
 
@@ -104,3 +106,5 @@ class mode:
         else:
             src = src.reshape((-1, 1))
             destination[inds_x[0]:inds_x[1], inds_y[0]:inds_y[1]] = np.abs(src)*np.sign(np.real(src))
+
+        return src

@@ -27,7 +27,7 @@ eps_m = n_index**2          # relative permittivity
 
 # geometric parameters for a 1 -> 2 port device
 L = 20     # length of box (L0) = micron 
-N = 9         # Num output ports 
+N = 10         # Num output ports 
 H = 20    # height of box (L0)
 w = .5        # width of waveguides (L0)
 d = H/10     # distance between waveguides (L0)
@@ -51,12 +51,29 @@ print("The simulation has {} grids per free space wavelength".format(int(lambda0
 
 # i = 9 # Waveguide num (start at 0)
 # y_i =  # Waveguide y-pos
-#for i in range(N):
+for i in range(N):
     # set the input waveguide modal source
-i=4
-simulation.add_mode(neff=np.sqrt(eps_m), direction_normal='x', center=[NPML[0]+int(l/2/dl), ny-((float(i)-float(N-1)/2.0)*d/dl + 0.5)], width=int(H/13/dl), scale=source_amp)
+    simulation.add_mode(neff=np.sqrt(eps_m), direction_normal='x', center=[NPML[0]+int(l/2/dl), ny-((float(i)-float(N-1)/2.0)*d/dl + 0.5)], width=int(H/13/dl), scale=source_amp, order=1)
 simulation.setup_modes()
+print('Setup sources!')
+
+for i in range(N):
+    simulation.modes[i].scale = 1e-7
+simulation.setup_modes()
+print('Set new instance of source amps!')
 
 (Hx, Hy, Ez) = simulation.solve_fields()
-simulation.plt_abs(outline=True, cbar=True)
-plt.show()
+print('Solved forward fields!')
+
+for i in range(N):
+    simulation.modes[i].scale = 1e-6
+simulation.setup_modes()
+print('Set new instance of source amps!')
+
+(Hx, Hy, Ez) = simulation.solve_fields()
+print('Solved forward fields for instance 2!')
+
+# for i in range(N):
+#     simulation.add_mode(neff=np.sqrt(eps_m), direction_normal='x', center=[-NPML[0]-int(l/2/dl), ny-((float(i)-float(N-1)/2.0)*d/dl + 0.5)], width=int(H/13/dl), scale=source_amp)
+# simulation.setup_modes()
+# print('Solved adjoint fields!')
