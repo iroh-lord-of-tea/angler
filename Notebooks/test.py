@@ -46,8 +46,8 @@ print("Computed a domain with {} grids in x and {} grids in y".format(Nx,Ny))
 print("The simulation has {} grids per free space wavelength".format(int(lambda0/dl/simulation.L0)))
 
 # plot the permittivity distribution
-# simulation.plt_eps(outline=False)
-# plt.show()
+simulation.plt_eps(outline=False)
+plt.show()
 
 # i = 9 # Waveguide num (start at 0)
 # y_i =  # Waveguide y-pos
